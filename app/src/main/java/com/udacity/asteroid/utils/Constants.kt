@@ -15,5 +15,9 @@ object Constants {
     const val PICTURE_OF_DAY_TABLE_NAME = "picture_of_day_table"
     const val DATABASE_NAME = "asteroid_db"
 
+    //Worker
+    const val REFRESH_WORKER_WORK_NAME = "RefreshAsteroidData"
+    const val DELETE_WORKER_WORK_NAME = "DeleteAsteroidData"
+
 
 }

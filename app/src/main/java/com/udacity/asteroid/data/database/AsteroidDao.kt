@@ -23,7 +23,7 @@ interface AsteroidDao {
     fun getAllAsteroids(): Flow<List<Asteroid>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg asteroid: Asteroid)
+    fun insertAsteroid(vararg asteroid: Asteroid)
 
     @Query("DELETE FROM ${Constants.ASTEROID_TABLE_NAME} WHERE closeApproachDate < :today")
     fun deletePreviousDayAsteroids(today: String): Int

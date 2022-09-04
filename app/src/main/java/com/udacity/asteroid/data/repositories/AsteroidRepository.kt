@@ -1,16 +1,13 @@
 package com.udacity.asteroid.data.repositories
 
-import android.content.Context
 import android.util.Log
 import com.udacity.asteroid.data.database.AsteroidDao
-import com.udacity.asteroid.data.database.AsteroidDatabase
 import com.udacity.asteroid.data.network.NasaClient
 import com.udacity.asteroid.data.network.parseAsteroidsJsonResult
 import com.udacity.asteroid.data.pojo.Asteroid
 import com.udacity.asteroid.data.pojo.PictureOfDay
 import com.udacity.asteroid.utils.Constants
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -30,7 +27,7 @@ class AsteroidRepository(private val dbDao: AsteroidDao) {
 
             for(astr in asteroids){
                 Log.d("meow", "inserting item...")
-                dbDao.insert(astr)
+                dbDao.insertAsteroid(astr)
                 Log.d("item" ,astr.toString() )
 
             }

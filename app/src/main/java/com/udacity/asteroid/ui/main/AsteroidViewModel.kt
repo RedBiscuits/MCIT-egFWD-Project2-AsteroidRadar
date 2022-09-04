@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.udacity.asteroid.data.pojo.Asteroid
 import com.udacity.asteroid.data.pojo.PictureOfDay
 import com.udacity.asteroid.data.repositories.AsteroidRepository
@@ -12,6 +14,7 @@ import kotlinx.coroutines.launch
 class AsteroidViewModel(
     private val repository: AsteroidRepository
 ) : ViewModel() {
+
 
     private val _asteroids = MutableLiveData<List<Asteroid>>()
     val asteroids:LiveData<List<Asteroid>>
@@ -29,5 +32,6 @@ class AsteroidViewModel(
     fun getPicture() = viewModelScope.launch{
         _picture.postValue(repository.getPictureOfDay())
     }
+
 
 }
