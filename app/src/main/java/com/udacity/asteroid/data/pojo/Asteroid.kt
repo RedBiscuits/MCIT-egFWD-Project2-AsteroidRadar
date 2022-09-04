@@ -1,4 +1,4 @@
-package com.udacity.asteroid.pojo
+package com.udacity.asteroid.data.pojo
 
 import android.os.Parcelable
 import androidx.room.Entity

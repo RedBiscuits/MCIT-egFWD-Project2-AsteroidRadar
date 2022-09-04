@@ -1,11 +1,11 @@
-package com.udacity.asteroid.database
+package com.udacity.asteroid.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.udacity.asteroid.pojo.Asteroid
-import com.udacity.asteroid.pojo.PictureOfDay
+import com.udacity.asteroid.data.pojo.Asteroid
+import com.udacity.asteroid.data.pojo.PictureOfDay
 import com.udacity.asteroid.utils.Constants
 
 @Database(entities = [Asteroid::class , PictureOfDay::class], version = 5)
@@ -23,7 +23,8 @@ abstract class AsteroidDatabase : RoomDatabase() {
                         context.applicationContext,
                         AsteroidDatabase::class.java,
                         Constants.DATABASE_NAME
-                    ).build()
+                    ).allowMainThreadQueries()
+                        .build()
                 }
             }
             return INSTANCE

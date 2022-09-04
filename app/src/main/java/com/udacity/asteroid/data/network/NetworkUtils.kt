@@ -1,8 +1,8 @@
-package com.udacity.asteroid.network
+package com.udacity.asteroid.data.network
 
 
 import com.udacity.asteroid.utils.Constants
-import com.udacity.asteroid.pojo.Asteroid
+import com.udacity.asteroid.data.pojo.Asteroid
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*

@@ -1,4 +1,4 @@
-package com.udacity.asteroid.pojo
+package com.udacity.asteroid.data.pojo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
