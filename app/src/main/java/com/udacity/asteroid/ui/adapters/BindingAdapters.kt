@@ -17,7 +17,7 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
     }
 }
 
-@BindingAdapter("picOfDay")
+@BindingAdapter("imgUrl")
 fun bindPictureOfDay(imageView: ImageView, urlString: String?) {
     urlString?.let {
         val url = it.toUri().buildUpon().scheme("https").build()
@@ -31,7 +31,7 @@ fun bindPictureOfDay(imageView: ImageView, urlString: String?) {
     }
 }
 
-@BindingAdapter("picOfDayText")
+@BindingAdapter("setText")
 fun bindPictureOfDayText(textView: TextView, title: String?) {
     title?.let {
         textView.text = title

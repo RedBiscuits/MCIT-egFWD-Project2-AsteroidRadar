@@ -1,18 +1,13 @@
 package com.udacity.asteroid.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.udacity.asteroid.data.pojo.Asteroid
 import com.udacity.asteroid.data.pojo.PictureOfDay
 import com.udacity.asteroid.data.repositories.AsteroidRepository
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AsteroidViewModel(
     private val repository: AsteroidRepository
@@ -44,4 +39,17 @@ class AsteroidViewModel(
             getAsteroids()
         }
     }
+
+    private val _navigateToAsteroidDetail:MutableLiveData<Asteroid>? = MutableLiveData<Asteroid>()
+    val navigateToAsteroidDetail
+        get() = _navigateToAsteroidDetail
+
+    fun onAsteroidClicked(asteroid: Asteroid){
+        _navigateToAsteroidDetail!!.value = asteroid
+    }
+
+    fun onAsteroidDetailNavigated() {
+        _navigateToAsteroidDetail!!.value = null
+    }
+
 }
