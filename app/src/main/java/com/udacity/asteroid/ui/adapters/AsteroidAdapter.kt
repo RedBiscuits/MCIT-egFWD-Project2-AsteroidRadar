@@ -1,41 +1,36 @@
 package com.udacity.asteroid.ui.adapters
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroid.R
 import com.udacity.asteroid.data.pojo.Asteroid
 import com.udacity.asteroid.databinding.AsteroidListItemBinding
 
-class AsteroidAdapter() : RecyclerView.Adapter<AsteroidAdapter.AsteroidViewHolder>() {
+class AsteroidAdapter(private val clickListener: AsteroidListener)
+    : ListAdapter<Asteroid , AsteroidAdapter.AsteroidViewHolder>(AsteroidDiffCallback()) {
 
-    private val asteroids = ArrayList<Asteroid>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
         return AsteroidViewHolder.from(parent)
-
-
     }
 
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
-        val asteroidsItem = asteroids[position]
-        holder.bind(asteroidsItem)
+        holder.bind(clickListener , getItem(position)!!)
     }
 
-    override fun getItemCount(): Int = asteroids.size
 
-    fun submitAsteroids(arrayList: ArrayList<Asteroid>){
-        asteroids.addAll(arrayList)
-    }
 
     class AsteroidViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = AsteroidListItemBinding.bind(itemView)
 
-        fun bind(asteroidsItem: Asteroid){
+        fun bind(clickListener: AsteroidListener , asteroidsItem: Asteroid){
             binding.asteroid = asteroidsItem
+            binding.clickListener = clickListener
+            binding.executePendingBindings()
         }
 
         companion object {
@@ -45,5 +40,26 @@ class AsteroidAdapter() : RecyclerView.Adapter<AsteroidAdapter.AsteroidViewHolde
                 return AsteroidViewHolder(view)
             }
         }
+    }
+
+    class AsteroidDiffCallback :
+        DiffUtil.ItemCallback<Asteroid>() {
+        override fun areItemsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
+            return oldItem.isPotentiallyHazardous == newItem.isPotentiallyHazardous &&
+                    oldItem.codename == newItem.codename &&
+                    oldItem.closeApproachDate == newItem.closeApproachDate &&
+                    oldItem.absoluteMagnitude == newItem.absoluteMagnitude &&
+                    oldItem.distanceFromEarth == newItem.distanceFromEarth &&
+                    oldItem.estimatedDiameter == newItem.estimatedDiameter &&
+                    oldItem.relativeVelocity == newItem.relativeVelocity
+        }
+    }
+
+    class AsteroidListener(val clickListener: (asteroid: Asteroid) -> Unit) {
+        fun onClick(asteroid: Asteroid) = clickListener(asteroid)
     }
 }

@@ -9,16 +9,16 @@
             name="asteroid"
             type="com.udacity.asteroid.data.pojo.Asteroid" />
 
-<!--        <variable-->
-<!--            name="clickListener"-->
-<!--            type="com.udacity." />-->
+        <variable
+            name="clickListener"
+            type="com.udacity.asteroid.ui.adapters.AsteroidAdapter.AsteroidListener" />
     </data>
-<!--    android:onClick="@{() -> clickListener.onClick(asteroid)}"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:onClick="@{() -> clickListener.onClick(asteroid)}"
         tools:background="@color/app_background">
 
         <TextView
