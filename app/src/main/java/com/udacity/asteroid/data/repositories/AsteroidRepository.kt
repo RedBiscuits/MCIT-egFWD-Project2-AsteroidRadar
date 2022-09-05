@@ -35,23 +35,22 @@ class AsteroidRepository(private val dbDao: AsteroidDao) {
         return asteroids
     }
 
-    suspend fun getAsteroids() : List<Asteroid>{
+    fun getAsteroids() : List<Asteroid>{
         return dbDao.getAsteroidsByCloseApproachDate(getToday(),getNextWeak())
     }
 
-    suspend fun deleteOutdatedAsteroids(){
+    fun deleteOutdatedAsteroids(){
         dbDao.deletePreviousDayAsteroids(getToday())
     }
 
-    suspend fun getPictureOfDay(): PictureOfDay? {
-        var pictureOfDay: PictureOfDay
-        withContext(Dispatchers.IO) {
-            pictureOfDay = NasaClient.nasaInterface.getPictureOfDay().await()
-        }
-        if (pictureOfDay.mediaType == Constants.IMAGE_MEDIA_TYPE) {
-            return pictureOfDay
-        }
-        return null
+    suspend fun refreshPictureOfDay(){
+        val pic = NasaClient.nasaInterface.getPictureOfDay().await()
+        dbDao.nukePicturesTable()
+        dbDao.insertPicture(pic)
+    }
+
+    fun getPictureOfDay(): PictureOfDay? {
+        return dbDao.getPictureOfDay().last()
     }
 
     fun getToday(): String {

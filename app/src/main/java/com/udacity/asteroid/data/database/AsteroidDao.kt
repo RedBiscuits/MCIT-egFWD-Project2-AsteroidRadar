@@ -32,7 +32,7 @@ interface AsteroidDao {
     * Pics
     * */
     @Query("SELECT * FROM ${Constants.PICTURE_OF_DAY_TABLE_NAME}")
-    fun getPictureOfDay(): Flow<PictureOfDay>
+    fun getPictureOfDay(): List<PictureOfDay>
 
     @Insert
     fun insertPicture(pictureOfDay: PictureOfDay)

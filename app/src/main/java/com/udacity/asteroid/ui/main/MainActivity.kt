@@ -4,11 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.WorkManager
 import com.udacity.asteroid.R
 import com.udacity.asteroid.data.database.AsteroidDatabase
 import com.udacity.asteroid.data.repositories.AsteroidRepository
-import com.udacity.asteroid.utils.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -55,5 +55,17 @@ class WorkManagerScheduler : Application() {
             ExistingPeriodicWorkPolicy.KEEP,
             deleteRequest
         )
+
+        val refreshPictureRequest = PeriodicWorkRequestBuilder<PictureRefreshWorker>(
+            1,
+            TimeUnit.DAYS
+        ).setConstraints(constraints)
+            .build()
+        WorkManager.getInstance().enqueueUniquePeriodicWork(
+            Constants.DELETE_WORKER_WORK_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            refreshPictureRequest
+        )
+
     }
 }
