@@ -1,10 +1,11 @@
 package com.udacity.asteroid.ui.adapters
 
-import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.udacity.asteroid.R
 
 @BindingAdapter("statusIcon")
@@ -17,12 +18,15 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
 }
 
 @BindingAdapter("picOfDay")
-fun bindPictureOfDay(imageView: ImageView, url: String?) {
-    url?.let {
+fun bindPictureOfDay(imageView: ImageView, urlString: String?) {
+    urlString?.let {
+        val url = it.toUri().buildUpon().scheme("https").build()
         Glide.with(imageView.context)
-            .load(Uri.parse(url))
-            .placeholder(R.drawable.placeholder_picture_of_day)
-            .error(com.google.android.material.R.drawable.mtrl_ic_error)
+            .load(url)
+            .apply(
+                RequestOptions()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image))
             .into(imageView)
     }
 }
