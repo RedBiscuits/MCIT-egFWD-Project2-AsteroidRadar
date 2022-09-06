@@ -7,6 +7,7 @@ import com.udacity.asteroid.data.pojo.Asteroid
 import com.udacity.asteroid.data.pojo.PictureOfDay
 import com.udacity.asteroid.utils.Constants
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,6 +41,9 @@ class AsteroidRepository(private val dbDao: AsteroidDao) {
 
     }
 
+    fun getAllAsteroids (): List<Asteroid>{
+        return dbDao.getAllAsteroids()
+    }
 
 
     fun getToday(): String {

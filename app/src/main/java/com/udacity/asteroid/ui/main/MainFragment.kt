@@ -1,7 +1,5 @@
 package com.udacity.asteroid.ui.main
 
-import android.content.Context.MODE_PRIVATE
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,10 +12,12 @@ import com.udacity.asteroid.data.database.AsteroidDatabase
 import com.udacity.asteroid.data.repositories.AsteroidRepository
 import com.udacity.asteroid.databinding.FragmentMainBinding
 import com.udacity.asteroid.ui.adapters.AsteroidAdapter
-import com.udacity.asteroid.ui.details.DetailFragmentArgs
 
 class MainFragment : Fragment() {
 
+    private val adapter = AsteroidAdapter(AsteroidAdapter.AsteroidListener { asteroid ->
+        viewModel.onAsteroidClicked(asteroid)
+    })
     private val repository by lazy {
         AsteroidRepository(AsteroidDatabase.getDatabase(requireContext()).asteroidDao)
     }
@@ -58,10 +58,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupAsteroidRecycler(binding: FragmentMainBinding) {
-        val adapter = AsteroidAdapter(AsteroidAdapter.AsteroidListener { asteroid ->
-            viewModel.onAsteroidClicked(asteroid)
-            Log.d("is it true ?? " , "Hell fucking yes!!!!")
-        })
+
         val manager = LinearLayoutManager(requireContext())
 
         binding.asteroidRecycler.adapter = adapter
@@ -80,6 +77,21 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.show_today -> {
+                adapter.submitList(adapter.currentList.filter {
+                    it.closeApproachDate == viewModel.getToday()
+                })
+            }
+            R.id.show_next_week -> {
+                adapter.submitList(viewModel.asteroids.value)
+            }
+            R.id.show_all->{
+                adapter.submitList(viewModel.allAsteroids.value)
+            }
+            else -> return true
+        }
         return true
     }
+
 }

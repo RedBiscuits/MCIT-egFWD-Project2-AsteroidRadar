@@ -22,14 +22,24 @@ class AsteroidViewModel(
     val asteroids:LiveData<List<Asteroid>>
         get() = _asteroids
 
+    private val _allAsteroids = MutableLiveData<List<Asteroid>>()
+    val allAsteroids:LiveData<List<Asteroid>>
+        get() = _allAsteroids
+
+
     private fun getAsteroids() = viewModelScope.launch(Dispatchers.IO){
         var asteroids = repository.getAsteroids()
+        var allAsteroids = repository.getAllAsteroids()
         if (asteroids.isEmpty()){
             repository.refreshAsteroids()
             asteroids = repository.getAsteroids()
+            allAsteroids =repository.getAllAsteroids()
         }
         asteroids?.let {
             _asteroids.postValue(it)
+        }
+        allAsteroids?.let {
+            _allAsteroids.postValue(it)
         }
         _loading.postValue(false)
     }
@@ -72,5 +82,7 @@ class AsteroidViewModel(
     fun onAsteroidDetailNavigated() {
         _navigateToAsteroidDetail!!.value = null
     }
-
+    fun getToday():String{
+        return repository.getToday()
+    }
 }

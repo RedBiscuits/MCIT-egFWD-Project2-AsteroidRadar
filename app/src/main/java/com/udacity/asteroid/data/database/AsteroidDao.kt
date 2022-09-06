@@ -20,7 +20,7 @@ interface AsteroidDao {
 
     @Query("SELECT * FROM ${Constants.ASTEROID_TABLE_NAME} " +
             "ORDER BY closeApproachDate ASC")
-    fun getAllAsteroids(): Flow<List<Asteroid>>
+    fun getAllAsteroids(): List<Asteroid>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAsteroid(vararg asteroid: Asteroid)

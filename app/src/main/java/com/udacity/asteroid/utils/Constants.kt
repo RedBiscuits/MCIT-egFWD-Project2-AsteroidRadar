@@ -8,9 +8,7 @@ object Constants {
     const val API_QUERY_DATE_FORMAT = "YYYY-MM-dd"
     const val DEFAULT_END_DATE_DAYS = 7
     const val NASA_API_BASE_URL = "https://api.nasa.gov/"
-    //TODO
     const val NASA_API_KEY = "REPLACE_YOUR_KEY"
-    const val IMAGE_MEDIA_TYPE = "image"
 
     //Database
     const val ASTEROID_TABLE_NAME = "asteroid_table"
@@ -20,7 +18,6 @@ object Constants {
     //Worker
     const val REFRESH_WORKER_WORK_NAME = "RefreshAsteroidData"
     const val DELETE_WORKER_WORK_NAME = "DeleteAsteroidData"
-    const val DELETE_PICTURE_WORKER = "DeletePictureData"
 
 
 }
