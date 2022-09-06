@@ -1,5 +1,6 @@
 package com.udacity.asteroid.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.udacity.asteroid.data.pojo.Asteroid
 import com.udacity.asteroid.data.pojo.PictureOfDay
 import com.udacity.asteroid.data.repositories.AsteroidRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AsteroidViewModel(
     private val repository: AsteroidRepository
@@ -19,24 +22,42 @@ class AsteroidViewModel(
     val asteroids:LiveData<List<Asteroid>>
         get() = _asteroids
 
-    fun getAsteroids() = viewModelScope.launch{
-        _asteroids.postValue(repository.getAsteroids())
+    private fun getAsteroids() = viewModelScope.launch(Dispatchers.IO){
+        var asteroids = repository.getAsteroids()
+        if (asteroids.isEmpty()){
+            repository.refreshAsteroids()
+            asteroids = repository.getAsteroids()
+        }
+        asteroids?.let {
+            _asteroids.postValue(it)
+        }
+        _loading.postValue(false)
     }
-
 
     private val _picture = MutableLiveData<PictureOfDay>()
     val picture:LiveData<PictureOfDay>
         get() = _picture
 
-    fun getTodayPicture() = viewModelScope.launch{
-        _picture.postValue(repository.getPictureOfDay())
+    private fun getTodayPicture() = viewModelScope.launch(Dispatchers.IO){
+        val picture = repository.getPictureOfDay()
+        picture?.let {
+        _picture.postValue(it)
+        }
     }
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading:LiveData<Boolean>
+        get() = _loading
+
     init {
-        viewModelScope.launch {
-//            repository.refreshPictureOfDay()
-            getTodayPicture()
-            getAsteroids()
+        viewModelScope.launch (Dispatchers.Default){
+            _loading.postValue(true)
+            withContext(Dispatchers.IO) {
+                getTodayPicture()
+            }
+            viewModelScope.launch{
+                getAsteroids()
+            }
         }
     }
 

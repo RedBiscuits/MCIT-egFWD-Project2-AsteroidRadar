@@ -28,15 +28,4 @@ interface AsteroidDao {
     @Query("DELETE FROM ${Constants.ASTEROID_TABLE_NAME} WHERE closeApproachDate < :today")
     fun deletePreviousDayAsteroids(today: String): Int
 
-    /*
-    * Pics
-    * */
-    @Query("SELECT * FROM ${Constants.PICTURE_OF_DAY_TABLE_NAME}")
-    fun getPictureOfDay(): List<PictureOfDay>
-
-    @Insert
-    fun insertPicture(pictureOfDay: PictureOfDay)
-
-    @Query("DELETE FROM ${Constants.PICTURE_OF_DAY_TABLE_NAME}")
-    fun nukePicturesTable()
 }

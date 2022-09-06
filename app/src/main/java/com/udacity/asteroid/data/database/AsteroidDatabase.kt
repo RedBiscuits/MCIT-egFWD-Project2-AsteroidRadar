@@ -8,7 +8,7 @@ import com.udacity.asteroid.data.pojo.Asteroid
 import com.udacity.asteroid.data.pojo.PictureOfDay
 import com.udacity.asteroid.utils.Constants
 
-@Database(entities = [Asteroid::class , PictureOfDay::class], version = 5 , exportSchema = false)
+@Database(entities = [Asteroid::class ], version = 6 , exportSchema = false)
 abstract class AsteroidDatabase : RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
 

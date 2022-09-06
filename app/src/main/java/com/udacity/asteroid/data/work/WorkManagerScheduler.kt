@@ -2,21 +2,22 @@ package com.udacity.asteroid.data.work
 
 
 import android.app.Application
+import android.app.ProgressDialog
+import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
 import androidx.work.*
+import com.udacity.asteroid.data.database.AsteroidDatabase
+import com.udacity.asteroid.data.repositories.AsteroidRepository
 import com.udacity.asteroid.utils.Constants
+import kotlinx.coroutines.*
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class WorkManagerScheduler : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d("meow" , "In onCreate method")
         CoroutineScope(Dispatchers.Default).launch {
             setupWorker()
         }
@@ -34,7 +35,7 @@ class WorkManagerScheduler : Application() {
             }.build()
         Log.d("meow" , "In setup method")
 
-        val refreshRequest = PeriodicWorkRequestBuilder<AsteroidRefreshWorker>(
+        val refreshRequest = PeriodicWorkRequestBuilder<AsteroidRefreshWork>(
             1,
             TimeUnit.DAYS
         ).setConstraints(constraints)
@@ -45,7 +46,7 @@ class WorkManagerScheduler : Application() {
             refreshRequest
         )
 
-        val deleteRequest = PeriodicWorkRequestBuilder<AsteroidDeleteWorker>(
+        val deleteRequest = PeriodicWorkRequestBuilder<AsteroidDeleteWork>(
             1,
             TimeUnit.DAYS
         ).setConstraints(constraints)
@@ -54,17 +55,6 @@ class WorkManagerScheduler : Application() {
             Constants.DELETE_WORKER_WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             deleteRequest
-        )
-
-        val refreshPictureRequest = PeriodicWorkRequestBuilder<PictureRefreshWorker>(
-            1,
-            TimeUnit.DAYS
-        ).setConstraints(constraints)
-            .build()
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
-            Constants.DELETE_WORKER_WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            refreshPictureRequest
         )
 
     }

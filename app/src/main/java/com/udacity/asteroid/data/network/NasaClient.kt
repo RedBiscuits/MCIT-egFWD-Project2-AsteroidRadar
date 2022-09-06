@@ -18,8 +18,8 @@ object NasaClient {
      private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
      private val client =OkHttpClient()
           .newBuilder()
-          .readTimeout(120 , TimeUnit.SECONDS)
-          .connectTimeout(120 , TimeUnit.SECONDS)
+          .readTimeout(60 , TimeUnit.SECONDS)
+          .connectTimeout(60 , TimeUnit.SECONDS)
           .build()
 
      private val retrofit = Retrofit.Builder()

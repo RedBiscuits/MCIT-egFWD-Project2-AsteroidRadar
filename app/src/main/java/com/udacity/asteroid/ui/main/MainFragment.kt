@@ -1,5 +1,7 @@
 package com.udacity.asteroid.ui.main
 
+import android.content.Context.MODE_PRIVATE
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -32,7 +34,16 @@ class MainFragment : Fragment() {
 
         setupAsteroidRecycler(binding)
 
-        viewModel.navigateToAsteroidDetail!!.observe(requireActivity()){ asteroid ->
+
+        viewModel.loading.observe(viewLifecycleOwner){ isLoading ->
+            Log.d("meow" , isLoading.toString())
+            if (isLoading){
+                binding.loadingDataSpinner.visibility = View.VISIBLE
+            }else{
+                binding.loadingDataSpinner.visibility = View.GONE
+            }
+        }
+        viewModel.navigateToAsteroidDetail!!.observe(viewLifecycleOwner){ asteroid ->
             asteroid?.let {
                 val action = MainFragmentDirections.actionShowDetail(asteroid)
                 findNavController().navigate(action)
@@ -56,7 +67,7 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.adapter = adapter
         binding.asteroidRecycler.layoutManager = manager
 
-        viewModel.asteroids.observe(requireActivity()) {
+        viewModel.asteroids.observe(viewLifecycleOwner) {
             it?.let {
             adapter.submitList(it)
             }

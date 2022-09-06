@@ -7,7 +7,7 @@ import com.udacity.asteroid.data.database.AsteroidDatabase
 import com.udacity.asteroid.data.repositories.AsteroidRepository
 import retrofit2.HttpException
 
-class AsteroidDeleteWorker (context: Context, params: WorkerParameters)
+class AsteroidDeleteWork (context: Context, params: WorkerParameters)
     : CoroutineWorker(context , params) {
 
     private val repository =
