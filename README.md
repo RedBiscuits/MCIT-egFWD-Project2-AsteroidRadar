@@ -11,11 +11,10 @@ The app is consists of two screens: A Main screen with a list of all the detecte
 This kind of app is one of the most usual in the real world, what you will learn by doing this are some of the most fundamental skills you need to know to work as a professional Android developer, as fetching data from the internet, saving data to a database, and display the data in a clear, clear, compelling UI.
 
 ### Screenshots
-
-![Screenshot 1](screenshots/screen_1.png = 250x250)
-![Screenshot 2](screenshots/screen_2.png = 250x250)
-![Screenshot 3](screenshots/screen_3.png = 250x250)
-![Screenshot 4](screenshots/screen_4.png = 250x250)
+<img src="screenshots/screen_1.png" width="300" height = "400">
+<img src="screenshots/screen_2.png" width="300" height = "400">
+<img src="screenshots/screen_3.png" width="300" height = "400">
+<img src="screenshots/screen_4.png" width="300" height = "400">
 
 ### Dependencies
 
